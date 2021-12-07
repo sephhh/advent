@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "checkJs": false,
+      "skipLibCheck": false,
+      "noUnusedParameters": true,
+      "strict": true,
+      "strictFunctionTypes": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": true,
+      "esModuleInterop": true,
+      "noUnusedLocals": true,
+      "strictNullChecks": true,
+      "strictPropertyInitialization": true,
+      "noImplicitAny": true,
+      "noUncheckedIndexedAccess": true,
+      "declaration": false,
+      "target": "ES2020",
+      "module": "ES2020",
+      "moduleResolution": "node",
+    },
+    "exclude": [
+      "./node_modules/*",
+      "**/node_modules/*",
+    ],
+  }
