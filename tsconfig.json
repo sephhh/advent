@@ -14,8 +14,9 @@
       "noImplicitAny": true,
       "noUncheckedIndexedAccess": true,
       "declaration": false,
-      "target": "ES2020",
-      "module": "ES2020",
+      "lib": ["es6"],
+      "target": "es6",
+      "module": "es6",
       "moduleResolution": "node",
     },
     "exclude": [

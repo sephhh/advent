@@ -19,5 +19,6 @@ module.exports = {
     semi: ["error", "always"],
     quotes: ["error", "double"],
     "prettier/prettier": "error",
+    "indent": ["error", 4],
   },
 };
