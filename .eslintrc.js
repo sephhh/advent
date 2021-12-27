@@ -19,6 +19,15 @@ module.exports = {
     semi: ["error", "always"],
     quotes: ["error", "double"],
     "prettier/prettier": "error",
-    "indent": ["error", 4],
+    "indent": ["error", 4, {"SwitchCase": 1}],    
+    "no-tabs": ["error", {"allowIndentationTabs": true}],
+    "max-len": [
+        "error",
+        {
+            "code": 90,
+            "tabWidth": 4,
+            "ignoreUrls": true
+        }
+    ],
   },
 };
