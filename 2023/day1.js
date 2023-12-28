@@ -21,7 +21,7 @@ var testInput = [
 ];
 // printCalibrationSum(testInput);
 // printCalibrationSum(realInput);
-var spelledNumberRegex = /(?=\d)|one|two|three|four|five|six|seven|eight|nine/g;
+var spelledNumberRegex = /\d|one|two|three|four|five|six|seven|eight|nine/g;
 var getNumberFromCharOrNumberWord = function (string) {
     switch (string) {
         case "one":
@@ -50,14 +50,19 @@ var getNumberFromCharOrNumberWord = function (string) {
 };
 var printCalibrationSum2 = function (input) {
     var sum = input.reduce(function (carry, currentString) {
-        var _a, _b;
-        var firstNumberString = (_a = currentString
-            .match(spelledNumberRegex)) === null || _a === void 0 ? void 0 : _a.shift();
-        var lastNumberString = (_b = currentString.match(spelledNumberRegex)) === null || _b === void 0 ? void 0 : _b.pop();
+        var _a;
+        var currentStringWithoutOverlaps = currentString
+            .replace(/one/g, "o one")
+            .replace(/eight/g, "e eight")
+            .replace(/nine/g, "n nine")
+            .replace(/three/g, "t three")
+            .replace(/two/g, "t two");
+        var match = currentStringWithoutOverlaps.match(spelledNumberRegex);
+        var firstNumberString = match === null || match === void 0 ? void 0 : match.shift();
+        var lastNumberString = (_a = match === null || match === void 0 ? void 0 : match.pop()) !== null && _a !== void 0 ? _a : firstNumberString;
         var firstNumber = getNumberFromCharOrNumberWord(firstNumberString);
         var lastNumber = getNumberFromCharOrNumberWord(lastNumberString);
         var calibration = firstNumber * 10 + lastNumber;
-        console.log("currentString", currentString, "calibration", calibration);
         return carry + calibration;
     }, 0);
     console.log("sum: ", sum);

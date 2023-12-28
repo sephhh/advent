@@ -51,14 +51,18 @@ const getNumberFromCharOrNumberWord = (string: unknown): number => {
 };
 const printCalibrationSum2 = (input: string[]) => {
     const sum = input.reduce((carry: number, currentString: string) => {
-        const firstNumberString = currentString
-            .match(spelledNumberRegex)
-            ?.shift();
-        const lastNumberString = currentString.match(spelledNumberRegex)?.pop();
+        const currentStringWithoutOverlaps = currentString
+            .replace(/one/g, "o one")
+            .replace(/eight/g, "e eight")
+            .replace(/nine/g, "n nine")
+            .replace(/three/g, "t three")
+            .replace(/two/g, "t two");
+        const match = currentStringWithoutOverlaps.match(spelledNumberRegex);
+        const firstNumberString = match?.shift();
+        const lastNumberString = match?.pop() ?? firstNumberString;
         const firstNumber = getNumberFromCharOrNumberWord(firstNumberString);
         const lastNumber = getNumberFromCharOrNumberWord(lastNumberString);
         const calibration = firstNumber * 10 + lastNumber;
-        console.log("currentString", currentString, "calibration", calibration);
         return carry + calibration;
     }, 0);
     console.log("sum: ", sum);

@@ -1,5 +1,6 @@
 import { assertInputDefined } from "./util/assertInputDefined";
 import { getDocumentRows, getInputRows } from "./util/getDocumentRows";
+import { pointIsInPolygon } from "./util/pointIsInPolygon";
 
 const VERTICAL_PIPE = "|";
 const HORIZONTAL_PIPE = "-";
@@ -223,71 +224,12 @@ function printNumPointsInPipePath(input: string[]) {
         const row = pipeMap[i];
         assertInputDefined(row);
         for (let j = 0; j < row.length; j++) {
-            if (pointIsInsidePolygon([i, j], polygon)) {
+            if (pointIsInPolygon([i, j], polygon)) {
                 numPointsInPolygon++;
             }
         }
     }
     console.log("Points in polygon", numPointsInPolygon);
-}
-
-const areCoordsEqual = (coordA: Coord, coordB: Coord) =>
-    coordA[0] === coordB[0] && coordA[1] === coordB[1];
-
-function pointIsInsidePolygon(
-    coord: Coord,
-    polygon: Coord[]
-    // pipeMap: PipeMap
-) {
-    const [row, col] = coord;
-    // j is previous point index
-    let j = polygon.length - 1;
-    let insidePolygon = false;
-    for (let i = 0; i < polygon.length; i++) {
-        const polygonPoint = polygon[i];
-        const previousPolygonPoint = polygon[j];
-        assertInputDefined(polygonPoint);
-        assertInputDefined(previousPolygonPoint);
-        if (areCoordsEqual(polygonPoint, coord)) {
-            return false;
-        }
-        if (polygonPoint[1] > col !== previousPolygonPoint[1] > col) {
-            const slope =
-                (row - polygonPoint[0]) *
-                    (previousPolygonPoint[1] - polygonPoint[1]) -
-                (previousPolygonPoint[0] - polygonPoint[0]) *
-                    (col - polygonPoint[1]);
-            if (slope === 0) {
-                // point is on boundary
-                return false;
-            }
-            if (slope < 0 !== previousPolygonPoint[1] < polygonPoint[1]) {
-                insidePolygon = !insidePolygon;
-            }
-        }
-
-        j = i;
-    }
-    return insidePolygon;
-    // let countCrosses = 0;
-    // // cast ray from coordinate downward to bottom of map
-    // for (let i = coord[0]; i < pipeMap.length; i++) {
-    //     const coordToCheck: Coord = [i, coord[1]];
-    //     const currentCoordIsPolygonBorder = polygon.some(
-    //         (polygonCoord) =>
-    //             coordToCheck[0] === polygonCoord[0] &&
-    //             coordToCheck[1] === polygonCoord[1]
-    //     );
-    //     if (
-    //         currentCoordIsPolygonBorder &&
-    //         pipeMap[coordToCheck[0]]?.[coordToCheck[1]] === HORIZONTAL_PIPE
-    //     ) {
-    //         countCrosses++;
-    //     }
-    // }
-    // console.log("countCrosses", countCrosses, "coord", coord);
-    // // odd crosses means it's inside the polygon
-    // return countCrosses % 2 !== 0;
 }
 
 printFurthestPipeDistance(getInputRows(testInput));
@@ -296,4 +238,3 @@ printFurthestPipeDistance(getDocumentRows("2023/day10.txt"));
 printNumPointsInPipePath(getInputRows(testInput));
 
 printNumPointsInPipePath(getDocumentRows("2023/day10.txt"));
-
